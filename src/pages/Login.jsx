@@ -22,7 +22,7 @@ export default class Login extends Component {
         });
       }
     });
-  }
+  };
 
   render() {
     const { disable, player, email } = this.state;
