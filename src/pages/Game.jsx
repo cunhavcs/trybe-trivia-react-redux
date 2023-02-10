@@ -9,6 +9,7 @@ class Game extends Component {
     currentAsk: 0,
     asks: [],
     token: localStorage.getItem('token'),
+    wasAnswered: false,
   };
 
   componentDidMount() {
@@ -29,12 +30,21 @@ class Game extends Component {
     });
   };
 
+  handleClick = () => {
+    this.setState({ wasAnswered: true });
+  };
+
   render() {
-    const { asks, currentAsk } = this.state;
+    const { asks, currentAsk, wasAnswered } = this.state;
     return (
       <>
         <Header />
-        {(asks.length !== 0) && <Ask ask={ asks[currentAsk] } />}
+        {(asks.length !== 0)
+        && <Ask
+          ask={ asks[currentAsk] }
+          wasAnswered={ wasAnswered }
+          handleClick={ this.handleClick }
+        />}
       </>
     );
   }

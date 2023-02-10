@@ -3,16 +3,15 @@ import React, { Component } from 'react';
 
 export default class Ask extends Component {
   render() {
-    const { ask } = this.props;
+    const { ask, wasAnswered, handleClick } = this.props;
     const answers = [...ask.incorrect_answers];
-    console.log(answers);
     answers.splice(
       Math.floor(Math.random() * (ask.incorrect_answers.length + 1)),
       0,
       ask.correct_answer,
     );
-    console.log(answers);
-    console.log(ask);
+    const correct = '3px solid rgb(6, 240, 15)';
+    const incorrect = '3px solid red';
 
     return (
       <div>
@@ -21,12 +20,16 @@ export default class Ask extends Component {
         <div data-testid="answer-options">
           {answers.map((answer, index) => (
             <button
+              type="button"
               key={ index }
               data-testid={
                 (answer === ask.correct_answer)
                   ? 'correct-answer'
                   : `wrong-answer-${index}`
               }
+              style={ { border: wasAnswered
+                 && ((answer === ask.correct_answer) ? correct : incorrect) } }
+              onClick={ handleClick }
             >
               {answer}
             </button>
@@ -45,4 +48,6 @@ Ask.propTypes = {
     question: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
   }).isRequired,
+  handleClick: PropTypes.func.isRequired,
+  wasAnswered: PropTypes.bool.isRequired,
 };
