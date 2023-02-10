@@ -14,7 +14,11 @@ class Game extends Component {
 
   componentDidMount() {
     const { token } = this.state;
+    const TIMER_TO_ANSWER = 30000;
     this.fetchAsks(token);
+    setTimeout(() => {
+      this.setState({ wasAnswered: true });
+    }, TIMER_TO_ANSWER);
   }
 
   fetchAsks = async (token) => {
