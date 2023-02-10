@@ -39,7 +39,8 @@ class Ask extends Component {
       medium: 2,
       hard: 3,
     };
-    const score = (10 + (timer * difficulty[ask.difficulty]));
+    const BASE_SCORE = 10;
+    const score = (BASE_SCORE + (timer * difficulty[ask.difficulty]));
     return score;
   };
 
@@ -93,10 +94,12 @@ Ask.propTypes = {
   ask: PropTypes.shape({
     category: PropTypes.string.isRequired,
     correct_answer: PropTypes.string.isRequired,
-    incorrect_answers: PropTypes.arrayOf(String).isRequired,
+    difficulty: PropTypes.string.isRequired,
+    incorrect_answers: PropTypes.arrayOf().isRequired,
     question: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
   }).isRequired,
+  dispatch: PropTypes.func.isRequired,
   handleClick: PropTypes.func.isRequired,
   wasAnswered: PropTypes.bool.isRequired,
 };
