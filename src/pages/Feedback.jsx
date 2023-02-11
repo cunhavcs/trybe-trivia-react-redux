@@ -60,7 +60,6 @@ class Feedback extends Component {
             } }
           >
             JOGAR NOVAMENTE
-
           </button>
         </div>
       </div>
