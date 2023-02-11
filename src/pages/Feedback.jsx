@@ -6,13 +6,12 @@ import teste from '../assets/teste.png';
 
 class Feedback extends Component {
   state = {
-    result: 4,
-    number: 1,
+    number: 3,
   };
 
   render() {
-    const { result, number } = this.state;
-    const { player, email, history } = this.props;
+    const { number } = this.state;
+    const { name, email, history, score, hit } = this.props;
     return (
       <div>
         <section>
@@ -28,23 +27,23 @@ class Feedback extends Component {
             <h1
               data-testid="header-player-name"
             >
-              { player }
+              { name }
             </h1>
           </figure>
         </section>
         <section>
-          <p data-testid="header-score">{result}</p>
+          <p data-testid="header-score">{score}</p>
         </section>
-        <section>
+        <section data-testid="feedback-text">
           {
-            result < number
-              ? <p data-testid="feedback-text">Could be better...</p>
-              : <p data-testid="feedback-text">Well Done!</p>
+            hit >= number
+              ? <p>Well Done!</p>
+              : <p>Could be better... </p>
           }
         </section>
         <section>
-          <p>{`Você acertou ${result} questões!`}</p>
-          <p>{`Um total de ${number} pontos`}</p>
+          <p>{`Você acertou ${hit} questões!`}</p>
+          <p>{`Um total de ${score} pontos`}</p>
         </section>
         <div>
           <button
@@ -68,15 +67,20 @@ class Feedback extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  player: state.user.player,
-  email: state.user.email,
+  name: state.player.name,
+  email: state.player.email,
+  score: state.player.score,
+  hit: state.player.hit,
+  notHit: state.player.notHit,
 });
 
 export default connect(mapStateToProps)(Feedback);
 
 Feedback.propTypes = {
-  player: PropTypes.string.isRequired,
+  score: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
+  hit: PropTypes.string.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,

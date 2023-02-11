@@ -1,4 +1,4 @@
-import { ADD_SCORE, LOGIN_USER } from './actionTypes';
+import { ADD_SCORE, LOGIN_USER, ADD_FALSE, ADD_TRUE } from './actionTypes';
 
 export const loginUser = (payload) => ({
   type: LOGIN_USER,
@@ -7,5 +7,15 @@ export const loginUser = (payload) => ({
 
 export const addScore = (payload) => ({
   type: ADD_SCORE,
+  payload,
+});
+
+export const addTrue = (payload) => ({
+  type: ADD_TRUE,
+  payload,
+});
+
+export const addFalse = (payload) => ({
+  type: ADD_FALSE,
   payload,
 });
