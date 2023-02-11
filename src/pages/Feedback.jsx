@@ -11,7 +11,8 @@ class Feedback extends Component {
 
   render() {
     const { number } = this.state;
-    const { name, email, history, score, hit } = this.props;
+    const { name, email, history, score, assertions } = this.props;
+
     return (
       <div>
         <section>
@@ -36,15 +37,13 @@ class Feedback extends Component {
         </section>
         <section data-testid="feedback-text">
           {
-            hit >= number
-              ? <p>Well Done!</p>
-              : <p>Could be better... </p>
+            assertions < number && assertions >= 0
+              ? <p>Could be better... </p>
+              : <p>Well Done!</p>
           }
         </section>
-        <section>
-          <p>{`Você acertou ${hit} questões!`}</p>
-          <p>{`Um total de ${score} pontos`}</p>
-        </section>
+        <p data-testid="feedback-total-question">{assertions}</p>
+        <p data-testid="feedback-total-score">{score}</p>
         <div>
           <button
             data-testid="btn-ranking"
@@ -80,7 +79,7 @@ const mapStateToProps = (state) => ({
   name: state.player.name,
   email: state.player.email,
   score: state.player.score,
-  hit: state.player.hit,
+  assertions: state.player.assertions,
   notHit: state.player.notHit,
 });
 
@@ -90,7 +89,7 @@ Feedback.propTypes = {
   score: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
-  hit: PropTypes.string.isRequired,
+  assertions: PropTypes.number.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
