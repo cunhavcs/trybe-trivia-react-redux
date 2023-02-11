@@ -45,6 +45,13 @@ class Ask extends Component {
     }
   };
 
+  clickNext = () => {
+    const { nextAsk } = this.props;
+    this.setState({ timer: 30 }, () => {
+      nextAsk();
+    });
+  };
+
   render() {
     const { ask, wasAnswered, answers } = this.props;
     const { timer } = this.state;
@@ -75,6 +82,15 @@ class Ask extends Component {
               {answer}
             </button>
           ))}
+          {wasAnswered && (
+            <button
+              type="button"
+              data-testid="btn-next"
+              onClick={ this.clickNext }
+            >
+              Next
+            </button>
+          )}
         </div>
       </div>
     );
@@ -82,19 +98,18 @@ class Ask extends Component {
 }
 
 Ask.propTypes = {
-  answers: PropTypes.shape({
-    map: PropTypes.func.isRequired,
-  }).isRequired,
+  answers: PropTypes.arrayOf(String).isRequired,
   ask: PropTypes.shape({
     category: PropTypes.string.isRequired,
     correct_answer: PropTypes.string.isRequired,
     difficulty: PropTypes.string.isRequired,
-    incorrect_answers: PropTypes.string.isRequired,
+    incorrect_answers: PropTypes.arrayOf(String).isRequired,
     question: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
   }).isRequired,
   dispatch: PropTypes.func.isRequired,
   handleClick: PropTypes.func.isRequired,
+  nextAsk: PropTypes.func.isRequired,
   wasAnswered: PropTypes.bool.isRequired,
 };
 

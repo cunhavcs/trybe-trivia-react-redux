@@ -52,18 +52,17 @@ class Game extends Component {
 
   nextAsk = () => {
     const { currentAsk, asks } = this.state;
-    this.setState(
-      {
-        currentAsk: currentAsk + 1,
-        wasAnswered: false,
-      },
-      () => {
-        const { history } = this.props;
-        if (currentAsk === asks.length) {
-          history.push('/feedback');
-        }
-      },
-    );
+    const { history } = this.props;
+    if (currentAsk < asks.length - 1) {
+      this.setState(
+        {
+          currentAsk: currentAsk + 1,
+          wasAnswered: false,
+        },
+      );
+    } else {
+      history.push('/feedback');
+    }
   };
 
   render() {
@@ -77,17 +76,8 @@ class Game extends Component {
           answers={ this.shuffleAnswer() }
           wasAnswered={ wasAnswered }
           handleClick={ this.handleClick }
+          nextAsk={ this.nextAsk }
         />}
-        {wasAnswered
-        && (
-          <button
-            type="button"
-            data-testid="btn-next"
-            onClick={ this.nextAsk }
-          >
-            Next
-          </button>
-        )}
       </>
     );
   }
