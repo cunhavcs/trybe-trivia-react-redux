@@ -5,17 +5,17 @@ import { loginUser } from '../redux/actions/actions';
 
 class Login extends Component {
   state = {
-    player: '',
+    name: '',
     email: '',
     disable: true,
   };
 
-  handleChange = ({ target: { name, value } }) => {
+  handleChange = ({ target: { name: inputName, value } }) => {
     this.setState({
-      [name]: value,
+      [inputName]: value,
     }, () => {
-      const { player, email } = this.state;
-      if (player !== '' && email !== '') {
+      const { name, email } = this.state;
+      if (name !== '' && email !== '') {
         this.setState({
           disable: false,
         });
@@ -29,24 +29,24 @@ class Login extends Component {
 
   handleClick = async () => {
     const { history, dispatch } = this.props;
-    const { player, email } = this.state;
+    const { name, email } = this.state;
     const linkAPI = 'https://opentdb.com/api_token.php?command=request';
     const fetchTrivia = await fetch(linkAPI);
     const response = await fetchTrivia.json();
     localStorage.setItem('token', response.token);
-    dispatch(loginUser({ player, email }));
+    dispatch(loginUser({ name, email }));
     history.push('/game');
   };
 
   render() {
-    const { disable, player, email } = this.state;
+    const { disable, name, email } = this.state;
     return (
       <div>
         <input
           type="text"
           data-testid="input-player-name"
-          value={ player }
-          name="player"
+          value={ name }
+          name="name"
           onChange={ this.handleChange }
         />
         <input
