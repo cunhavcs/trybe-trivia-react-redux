@@ -10,6 +10,8 @@ import './App.css';
 export default function App() {
   return (
     <Switch>
+      <Route path="/feedback" component={ Feedback } />
+      <Route path="/ranking" component={ Ranking } />
       <Route path="/game" component={ Game } />
       <Route path="/ranking" component={ Ranking } />
       <Route path="/settings" component={ Settings } />

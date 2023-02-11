@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addScore } from '../redux/actions/actions';
+import { addScore, addTrue, addFalse } from '../redux/actions/actions';
 
 class Ask extends Component {
   state = {
@@ -39,9 +39,11 @@ class Ask extends Component {
     const { dispatch, handleClick } = this.props;
     if (name === 'correct') {
       dispatch(addScore(this.calcScore()));
+      dispatch(addTrue());
       handleClick();
     } else {
       handleClick();
+      dispatch(addFalse());
     }
   };
 
@@ -75,7 +77,7 @@ class Ask extends Component {
                   : `wrong-answer-${index}`
               }
               style={ { border: wasAnswered
-                 && ((answer === ask.correct_answer) ? correct : incorrect) } }
+                && ((answer === ask.correct_answer) ? correct : incorrect) } }
               onClick={ this.clisckAnswer }
               disabled={ wasAnswered }
             >
