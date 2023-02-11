@@ -21,6 +21,18 @@ class Game extends Component {
     }, TIMER_TO_ANSWER);
   }
 
+  shuffleAnswer = () => {
+    const { currentAsk, asks } = this.state;
+    const ask = asks[currentAsk];
+    const answers = [...ask.incorrect_answers];
+    answers.splice(
+      Math.floor(Math.random() * (ask.incorrect_answers.length + 1)),
+      0,
+      ask.correct_answer,
+    );
+    return answers;
+  };
+
   fetchAsks = async (token) => {
     const { history } = this.props;
     const data = await fetch(`https://opentdb.com/api.php?amount=5&token=${token}`);
@@ -38,6 +50,22 @@ class Game extends Component {
     this.setState({ wasAnswered: true });
   };
 
+  nextAsk = () => {
+    const { currentAsk, asks } = this.state;
+    this.setState(
+      {
+        currentAsk: currentAsk + 1,
+        wasAnswered: false,
+      },
+      () => {
+        const { history } = this.props;
+        if (currentAsk === asks.length) {
+          history.push('/feedback');
+        }
+      },
+    );
+  };
+
   render() {
     const { asks, currentAsk, wasAnswered } = this.state;
     return (
@@ -46,9 +74,20 @@ class Game extends Component {
         {(asks.length !== 0)
         && <Ask
           ask={ asks[currentAsk] }
+          answers={ this.shuffleAnswer() }
           wasAnswered={ wasAnswered }
           handleClick={ this.handleClick }
         />}
+        {wasAnswered
+        && (
+          <button
+            type="button"
+            data-testid="btn-next"
+            onClick={ this.nextAsk }
+          >
+            Next
+          </button>
+        )}
       </>
     );
   }

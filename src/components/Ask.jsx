@@ -5,20 +5,11 @@ import { addScore } from '../redux/actions/actions';
 
 class Ask extends Component {
   state = {
-    answers: [],
     timer: 29,
   };
 
   componentDidMount() {
-    const { ask } = this.props;
-    const answers = [...ask.incorrect_answers];
     const TIMER = 1000;
-    answers.splice(
-      Math.floor(Math.random() * (ask.incorrect_answers.length + 1)),
-      0,
-      ask.correct_answer,
-    );
-    this.setState({ answers });
     const stopwatch = setInterval(() => {
       const { timer } = this.state;
       if (timer >= 1) {
@@ -55,8 +46,8 @@ class Ask extends Component {
   };
 
   render() {
-    const { ask, wasAnswered } = this.props;
-    const { answers, timer } = this.state;
+    const { ask, wasAnswered, answers } = this.props;
+    const { timer } = this.state;
     const correct = '3px solid rgb(6, 240, 15)';
     const incorrect = '3px solid red';
 
@@ -91,11 +82,14 @@ class Ask extends Component {
 }
 
 Ask.propTypes = {
+  answers: PropTypes.shape({
+    map: PropTypes.func.isRequired,
+  }).isRequired,
   ask: PropTypes.shape({
     category: PropTypes.string.isRequired,
     correct_answer: PropTypes.string.isRequired,
     difficulty: PropTypes.string.isRequired,
-    incorrect_answers: PropTypes.arrayOf().isRequired,
+    incorrect_answers: PropTypes.string.isRequired,
     question: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
   }).isRequired,
