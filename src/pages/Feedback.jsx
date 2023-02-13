@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import md5 from 'crypto-js/md5';
 import { connect } from 'react-redux';
 import teste from '../assets/teste.png';
+import { resetPlayer } from '../redux/actions/actions';
 
 class Feedback extends Component {
   state = {
@@ -11,7 +12,7 @@ class Feedback extends Component {
 
   render() {
     const { number } = this.state;
-    const { name, email, history, score, assertions } = this.props;
+    const { name, email, history, score, assertions, dispatch } = this.props;
 
     return (
       <div>
@@ -64,6 +65,7 @@ class Feedback extends Component {
             type="button"
             data-testid="btn-play-again"
             onClick={ () => {
+              dispatch(resetPlayer());
               history.push('/');
             } }
           >
@@ -86,11 +88,12 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps)(Feedback);
 
 Feedback.propTypes = {
-  score: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired,
-  email: PropTypes.string.isRequired,
   assertions: PropTypes.number.isRequired,
+  dispatch: PropTypes.func.isRequired,
+  email: PropTypes.string.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
+  name: PropTypes.string.isRequired,
+  score: PropTypes.number.isRequired,
 };

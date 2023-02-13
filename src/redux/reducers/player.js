@@ -1,4 +1,8 @@
-import { ADD_SCORE, LOGIN_USER, ADD_FALSE, ADD_TRUE } from '../actions/actionTypes';
+import { ADD_SCORE,
+  LOGIN_USER,
+  ADD_FALSE,
+  ADD_TRUE,
+  RESET_PLAYER } from '../actions/actionTypes';
 
 const INITIAL_STATE = {
   score: 0,
@@ -16,6 +20,8 @@ const player = (state = INITIAL_STATE, { type, payload }) => {
     return ({ ...state, assertions: state.assertions + 1 });
   case ADD_FALSE:
     return ({ ...state, notHit: state.notHit + 1 });
+  case RESET_PLAYER:
+    return (INITIAL_STATE);
   default:
     return state;
   }
