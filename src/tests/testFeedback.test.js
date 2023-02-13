@@ -26,9 +26,14 @@ describe("Vamos testar a tela de feedback e se contem os arquivos necessários "
   })
 
   it('Verificar se contém o texto de feedback do player', () => {
-    const could = renderWithRouterAndRedux(<Feedback score={3} assertions={3}/>);
-    const textToFeedback = screen.getByTestId('feedback-text');
-    expect(textToFeedback).toBeInTheDocument();
+    
+    const { getByTestId } = renderWithRouterAndRedux(<Feedback assertions={2}/>);
+    const textToFeedback = getByTestId('feedback-text').textContent;
+    expect(textToFeedback).toEqual('Could be better...');
+    
+    const { getByTestId: getByTestId2 } = renderWithRouterAndRedux(<Feedback assertions={4}/>);
+    const textToFeedback2 = getByTestId2('feedback-text').textContent;
+    expect(textToFeedback2).toEqual('Well Done!');
   })
 
   it('Verificar se contém o total de questões que foram certas ou erradas', () => {
@@ -82,7 +87,7 @@ describe("Vamos testar a tela de feedback e se contem os arquivos necessários "
     const { pathname } = history.location
     expect(pathname).toBe('/game');
   })
-  
+
   it('Verificando se a um botão playgain leva para a pagina inicial', () => {
     const initialState = {
       player: {

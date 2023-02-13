@@ -35,11 +35,11 @@ class Feedback extends Component {
         <section>
           <p data-testid="header-score">{score}</p>
         </section>
-        <section>
+        <section data-testid="feedback-text">
           {
             assertions < number && assertions >= 0
-              ? <p data-testid="feedback-text">Could be better... </p>
-              : <p data-testid="feedback-text">Well Done!</p>
+              ? <p>Could be better...</p>
+              : <p>Well Done!</p>
           }
         </section>
         <p data-testid="feedback-total-question">{assertions}</p>
