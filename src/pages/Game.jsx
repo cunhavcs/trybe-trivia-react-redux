@@ -61,7 +61,21 @@ class Game extends Component {
         },
       );
     } else {
+      this.saveRanking();
       history.push('/feedback');
+    }
+  };
+  // email, nome, pontuação
+
+  saveRanking = () => {
+    const { name, email, score } = this.props;
+
+    if (localStorage.ranking) {
+      const ranking = JSON.parse(localStorage.getItem('ranking'));
+      ranking.push({ name, email, score });
+      localStorage.setItem('ranking', JSON.stringify(ranking));
+    } else {
+      localStorage.setItem('ranking', JSON.stringify([{ name, email, score }]));
     }
   };
 
@@ -84,9 +98,18 @@ class Game extends Component {
 }
 
 Game.propTypes = {
+  email: PropTypes.string.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
+  name: PropTypes.string.isRequired,
+  score: PropTypes.number.isRequired,
 };
 
-export default connect()(Game);
+const mapStateToProps = (state) => ({
+  name: state.player.name,
+  email: state.player.email,
+  score: state.player.score,
+});
+
+export default connect(mapStateToProps)(Game);
