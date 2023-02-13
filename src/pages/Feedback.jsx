@@ -35,11 +35,11 @@ class Feedback extends Component {
         <section>
           <p data-testid="header-score">{score}</p>
         </section>
-        <section data-testid="feedback-text">
+        <section>
           {
             assertions < number && assertions >= 0
-              ? <p>Could be better... </p>
-              : <p>Well Done!</p>
+              ? <p data-testid="feedback-text">Could be better... </p>
+              : <p data-testid="feedback-text">Well Done!</p>
           }
         </section>
         <p data-testid="feedback-total-question">{assertions}</p>
@@ -83,8 +83,6 @@ const mapStateToProps = (state) => ({
   notHit: state.player.notHit,
 });
 
-export default connect(mapStateToProps)(Feedback);
-
 Feedback.propTypes = {
   score: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
@@ -94,3 +92,5 @@ Feedback.propTypes = {
     push: PropTypes.func.isRequired,
   }).isRequired,
 };
+
+export default connect(mapStateToProps)(Feedback);
